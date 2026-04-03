@@ -21,12 +21,12 @@ public class createUserRegistration {
     private String email;
 
     @NotBlank
-    @Pattern(regexp = "^[0-9]{10}$")
+//    @Pattern(regexp = "^[0-9]{10}$",message = "phone number must  be 10 digits")
     private String phoneNumber;
 
     @NotBlank
-    @Pattern(regexp ="^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.[*$@%!?&])[a-zA-Z\\d*$@%!?&]{8,}$",
-            message = "Password must at least 8 characters with lowercase, uppercase,special character,and number"      )
+//    @Pattern(regexp ="^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[$@%!?&])[a-zA-Z\\d*$@%!?&]{8,}$",
+//            message = "Password must at least 8 characters with lowercase, uppercase,special character,and number"      )
     private String password;
 
 

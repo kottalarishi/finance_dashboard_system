@@ -22,16 +22,15 @@ public class User {
      @Column(name="id")
      private Long id;
 
-     @Column(name="userName")
-
+     @Column(name="user_name")
      private String userName;
 
 
-     @Column(name="userEmail")
+     @Column(name="email")
      private String email;
 
 
-     @Column(name="phoneNumber")
+     @Column(name="phone_number")
      private String phoneNumber;
 
      @Column(name="password")

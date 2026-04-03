@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class TransactionMapper {
 
-    public static TransactionResponse toDto(Transaction transaction){
+    public  TransactionResponse toDto(Transaction transaction){
 
         if(transaction==null){
             return null;
@@ -29,7 +29,7 @@ public class TransactionMapper {
 
     }
 
-    public static Transaction toEntity(createTransactionRequest createTransactionRequest){
+    public  Transaction toEntity(createTransactionRequest createTransactionRequest){
 
         if(createTransactionRequest==null){
             return null;
