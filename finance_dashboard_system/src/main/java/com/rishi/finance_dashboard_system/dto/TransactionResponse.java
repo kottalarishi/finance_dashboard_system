@@ -32,5 +32,7 @@ public class TransactionResponse {
 
          private String userName;
 
+         private Long userId;
+
 
 }

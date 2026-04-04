@@ -33,5 +33,5 @@ public class createTransactionRequest {
     @NotBlank
     private String notes;
 
-    private Long userId;
+    private Long user_id;
 }

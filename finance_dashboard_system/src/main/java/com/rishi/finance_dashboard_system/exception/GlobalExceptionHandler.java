@@ -4,6 +4,7 @@ import com.rishi.finance_dashboard_system.util.ApiResponse;
 import com.sun.jdi.request.DuplicateRequestException;
 import jakarta.annotation.Resource;
 import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -49,6 +50,22 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(new ApiResponse<>(404,exception.getMessage(),null));
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<ApiResponse<Object>> handleDbExceptions(DataIntegrityViolationException exception){
+        String message= exception.getMostSpecificCause().getMessage();
+
+        if(message.contains("users_phonenumber_key")){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(new ApiResponse<>(409,"phone number already exists",null));
+        }
+
+//        if(message.contains("users_email_key")){
+//            return ResponseEntity.status(HttpStatus.CONFLICT).body(new ApiResponse<>(409," email already exists",null));
+//        }
+
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse<>(500,"Data base error occurred ",null));
+
     }
 
 

@@ -1,6 +1,7 @@
 package com.rishi.finance_dashboard_system.serviceInterfaces;
 
 import com.rishi.finance_dashboard_system.dto.TransactionResponse;
+import com.rishi.finance_dashboard_system.dto.UpdateTransactionRequest;
 import com.rishi.finance_dashboard_system.dto.createTransactionRequest;
 import com.rishi.finance_dashboard_system.entity.Transaction;
 import com.rishi.finance_dashboard_system.entity.Type;
@@ -25,7 +26,7 @@ public interface TransactionInterface {
             LocalDate endDate
 
     );
-    TransactionResponse updateTransaction(createTransactionRequest transactionRequest);
+    TransactionResponse updateTransaction(Long id , UpdateTransactionRequest updateTransactionRequest);
 
 
 

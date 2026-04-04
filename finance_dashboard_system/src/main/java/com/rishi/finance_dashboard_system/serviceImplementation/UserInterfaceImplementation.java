@@ -1,5 +1,6 @@
 package com.rishi.finance_dashboard_system.serviceImplementation;
 
+import com.rishi.finance_dashboard_system.dto.UpdateUserRequest;
 import com.rishi.finance_dashboard_system.dto.UserResponse;
 import com.rishi.finance_dashboard_system.dto.createUserRegistration;
 import com.rishi.finance_dashboard_system.entity.Role;
@@ -72,7 +73,31 @@ public class UserInterfaceImplementation implements UserInterface {
     }
 
     @Override
-    public UserResponse updateUser(createUserRegistration userRegistration) {
-        return null;
+    public UserResponse updateUser(Long id, UpdateUserRequest updateUserRequest) {
+
+        User user=userRepository.findById(id).orElseThrow(()-> new
+                GlobalExceptionHandler.ResourceNotFoundException("id not found with "+ id));
+
+        if(updateUserRequest.getUserName()!=null){
+            user.setUserName(updateUserRequest.getUserName());
+        }
+        if(updateUserRequest.getPassword()!=null){
+
+            user.setPassword(updateUserRequest.getPassword());
+
+        }
+
+        if(updateUserRequest.getPhoneNumber()!=null){
+            user.setPhoneNumber(updateUserRequest.getPhoneNumber());
+        }
+
+        if(updateUserRequest.getEmail()!=null){
+            user.setEmail(updateUserRequest.getEmail());
+        }
+
+        User updateUser= userRepository.save(user);
+
+
+        return userMapper.toDto(updateUser);
     }
 }

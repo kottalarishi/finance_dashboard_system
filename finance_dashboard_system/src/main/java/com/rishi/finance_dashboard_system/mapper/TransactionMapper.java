@@ -23,6 +23,9 @@ public class TransactionMapper {
         transactionResponse.setCategory(transaction.getCategory());
         transactionResponse.setNotes(transaction.getNotes());
         transactionResponse.setDate(transaction.getDate());
+        transactionResponse.setUserId(transaction.getUser().getId());
+
+
 
         return  transactionResponse;
 
@@ -41,6 +44,10 @@ public class TransactionMapper {
         transaction.setType(createTransactionRequest.getType());
         transaction.setCategory(createTransactionRequest.getCategory());
         transaction.setDate(createTransactionRequest.getDate());
+
+
+
+
 
         return transaction;
 

@@ -1,7 +1,6 @@
 package com.rishi.finance_dashboard_system.controller;
 
-import com.rishi.finance_dashboard_system.dto.UserResponse;
-import com.rishi.finance_dashboard_system.dto.createUserRegistration;
+import com.rishi.finance_dashboard_system.dto.*;
 import com.rishi.finance_dashboard_system.serviceImplementation.UserInterfaceImplementation;
 import com.rishi.finance_dashboard_system.util.ApiResponse;
 import jakarta.validation.Valid;
@@ -21,7 +20,7 @@ public class UserController {
 
 
    @PostMapping("/saveUser")
-    public ResponseEntity<ApiResponse<UserResponse>> addUser(@Valid @RequestBody createUserRegistration userRegistration){
+    public ResponseEntity<ApiResponse<UserResponse>> addUser( @RequestBody  @Valid createUserRegistration userRegistration){
         UserResponse userResponse= userInterfaceImplementation.addUser(userRegistration);
 
         ApiResponse<UserResponse> response= new ApiResponse<>(201,"user created successfully", userResponse);
@@ -45,6 +44,15 @@ public class UserController {
         ApiResponse<UserResponse> response= new ApiResponse<>(200,"user deleted successfully",null);
         return ResponseEntity.status(response.getStatusCode()).body(response);
 
+    }
+
+    @PatchMapping("/partialupdate/{id}")
+    public ResponseEntity<ApiResponse<UserResponse>> updateUser(@PathVariable Long id, @RequestBody UpdateUserRequest updateUserRequest){
+
+        UserResponse userResponse= userInterfaceImplementation.updateUser(id,updateUserRequest);
+
+        ApiResponse<UserResponse> response= new ApiResponse<>(200,"User updated Successfully",userResponse);
+        return  ResponseEntity.status(response.getStatusCode()).body(response);
     }
 
 
