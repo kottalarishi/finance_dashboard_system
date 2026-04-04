@@ -9,6 +9,7 @@ import com.rishi.finance_dashboard_system.repositary.TransactionRepository;
 import com.rishi.finance_dashboard_system.repositary.UserRepository;
 import com.rishi.finance_dashboard_system.serviceInterfaces.DashBoradInterface;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class DashBoardInterfaceImplementation implements DashBoradInterface {
@@ -38,6 +40,7 @@ public class DashBoardInterfaceImplementation implements DashBoradInterface {
          List<Transaction> transactions=  transactionRepository.findByUserId(userId);
          BigDecimal totalIncome= BigDecimal.ZERO;
          for(Transaction transaction:transactions){
+
              if(transaction.getType()== Type.INCOME){
                  totalIncome=totalIncome.add(transaction.getAmount());
              }
