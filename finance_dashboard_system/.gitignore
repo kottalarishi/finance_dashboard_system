@@ -29,5 +29,18 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
+
+finance_dashboard_system/src/main/resources/application.properties
+
+spring.application.name=finance_dashboard_system
+spring.datasource.url=jdbc:postgresql://localhost:5433/local db name
+spring.datasource.username= your username
+spring.datasource.password= your password
+spring.flyway.out-of-order=true
+spring.flyway.repair=true
+app.jwt.secret=keep minimum 32 characters which consists of uppercase lowercase and number
+app.jwt.access-expiration=3600000
+app.jwt.refresh-expiration=604800000
+
 ### VS Code ###
 .vscode/
