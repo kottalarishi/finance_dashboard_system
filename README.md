@@ -1,4 +1,8 @@
-# finance_dashboard_system
+# Finance Dashboard System<br>
+**Author:** Rishi kottala <br>
+**Email:** kottalarishi4@gmail.com <br>
+**role Applied:** Backend Developer intern <br>
+ # Title : finance_dashboard_system
 The finance_dashboard_system is to build the finance data processing and to provied the role based access control 
 
 ## Problem Statement <br>
@@ -168,6 +172,16 @@ Here in the  finance_dashboard_system there are  multiple finacial records and d
   - "CORS allows all orgins " --> in COrs we have allowedOrgins(*) for development convenience so we need to customize as per 
      frontend.
     
+  ## Aditional ThoughtFulness
+
+- ApiResponse wrapper accros all endpoints
+- used BCrypt password hassing for jwt and secure storage
+- Flyway migration of db for version control
+- Postman collection in repo for easy testing
+- cors configure for front end ready application
+- application.properties are in gitIgnore beacuse credentials are not pushed into github
+- Cascade deleting
+- user and authorites wrapped in CustomeruserDetailsServie
   
   
   
