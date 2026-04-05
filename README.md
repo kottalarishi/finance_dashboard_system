@@ -114,17 +114,17 @@ Here in the  finance_dashboard_system there are  multiple finacial records and d
    - DELETE  /api/v1/transactions/delete/{id}  :  we can delete users on the basis of userId and return message not the data accessed by the ADMIN  <br>
    - GET     /api/v1/transactions/getTransactions/{id} : Here this APIs make some diffrence fetch we can get the all transactions of user based on userId <br>
    - GET     /api/v1/transactions/filterTransactions  : Here we filter the transaction with specific date, category, type " not all the fields are required we can fetch individually or by group"  <br>
-   - PATCH   /api/v1/transactions/partialupdate/{id} : This   API will update the transactions partiallly and returns the TransactionResponse <br>
+   - PATCH   /api/v1/transactions/partialupdate/{id} : This   API will update the transactions partiallly and returns the TransactionResponse ADMIN level  <br>
 
     ## DashboardController APIs 
 
-    - GET    /api/v1/dashBoard/totalIncome/{userId}  <br>
-    - GET    /api/v1/dashBoard/totalExpense/{userId}  <br>
-    - GET    /api/v1/dashBoard/netBalance/{userId}    <br>
-    - GET    /api/v1/dashBoard/getCategoryWiseTotal/{userId} <br>
-    - GET    /api/v1/dashBoard/getMonthlyTrends/{userId}     <br>
-    - GET    /api/v1/dashBoard/getRecentActivity/{userId}    <br>
-    - GET    /api/v1/dashBoard/getMonthlyCategoryWiseTotal/{userId} <br>
+    - GET    /api/v1/dashBoard/totalIncome/{userId}  :  This apis helps to calculate the totalIncome of the user based on userId as itreates over the all transactions and fetch only the Transaction which is INCOME type and add to totalINcome returns BIGDECIMAL type totalIncome  accessd by "all ROLES"   <br>
+    - GET    /api/v1/dashBoard/totalExpense/{userId}  :   Here we calculate totalExpenses by itreating   all transactions  of user and add to toatlExpense and returns totalExpenses accessed by all ROLES  <br>
+    - GET    /api/v1/dashBoard/netBalance/{userId}   : This api returns netBlance of the users by calling the totalIncome and totalExpenses methods and calculate netBlance(diffrence of BIGDECIMAL valuse returend bby methods)   accessed by all ROLES <br> 
+    - GET    /api/v1/dashBoard/getCategoryWiseTotal/{userId} : here we get category wise total amount used collection, lamdas to calculate   "ADMIN " and "ANALYST "  <br>
+    - GET    /api/v1/dashBoard/getMonthlyTrends/{userId}    This api returns total income plus total Expenses together     "ADMIN " and "ANALYST " <br>
+    - GET    /api/v1/dashBoard/getRecentActivity/{userId}   TTo retrive the recent transaction returns the lastest  5 transactions if < 5 we get transaction present in the Db  accessed "ADMIN " and "ANALYST "  <br>
+    - GET    /api/v1/dashBoard/getMonthlyCategoryWiseTotal/{userId} :   This returns monthly category wise amount by gropuing month and category accessed by  "ADMIN " and "ANALYST " <br>
 
   
 
