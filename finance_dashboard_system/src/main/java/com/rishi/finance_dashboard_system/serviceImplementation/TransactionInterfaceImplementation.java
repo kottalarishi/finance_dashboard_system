@@ -2,7 +2,7 @@ package com.rishi.finance_dashboard_system.serviceImplementation;
 
 import com.rishi.finance_dashboard_system.dto.TransactionResponse;
 import com.rishi.finance_dashboard_system.dto.UpdateTransactionRequest;
-import com.rishi.finance_dashboard_system.dto.createTransactionRequest;
+import com.rishi.finance_dashboard_system.dto.CreateTransactionRequest;
 import com.rishi.finance_dashboard_system.entity.Transaction;
 import com.rishi.finance_dashboard_system.entity.Type;
 import com.rishi.finance_dashboard_system.entity.User;
@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Locale;
 import java.util.stream.Collectors;
 
 
@@ -39,7 +38,7 @@ public class TransactionInterfaceImplementation implements TransactionInterface 
      private final  TransactionMapper transactionMapper;
 
     @Override
-    public TransactionResponse addTransaction(createTransactionRequest transactionRequest) {
+    public TransactionResponse addTransaction(CreateTransactionRequest transactionRequest) {
         if(transactionRequest==null){
             throw new IllegalArgumentException("Invalid Input");
         }

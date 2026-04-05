@@ -1,7 +1,7 @@
 package com.rishi.finance_dashboard_system.mapper;
 
 import com.rishi.finance_dashboard_system.dto.UserResponse;
-import com.rishi.finance_dashboard_system.dto.createUserRegistration;
+import com.rishi.finance_dashboard_system.dto.CreateUserRegistration;
 import com.rishi.finance_dashboard_system.entity.User;
 import org.springframework.stereotype.Component;
 
@@ -26,7 +26,7 @@ public class UserMapper {
 
       }
 
-      public   User toEntity(createUserRegistration userRegistration){
+      public   User toEntity(CreateUserRegistration userRegistration){
 
           if(userRegistration==null){
               return null;

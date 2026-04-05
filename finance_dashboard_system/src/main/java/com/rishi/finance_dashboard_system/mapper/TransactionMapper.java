@@ -1,7 +1,7 @@
 package com.rishi.finance_dashboard_system.mapper;
 
 import com.rishi.finance_dashboard_system.dto.TransactionResponse;
-import com.rishi.finance_dashboard_system.dto.createTransactionRequest;
+import com.rishi.finance_dashboard_system.dto.CreateTransactionRequest;
 import com.rishi.finance_dashboard_system.entity.Transaction;
 import org.springframework.stereotype.Component;
 
@@ -32,7 +32,7 @@ public class TransactionMapper {
 
     }
 
-    public  Transaction toEntity(createTransactionRequest createTransactionRequest){
+    public  Transaction toEntity(CreateTransactionRequest createTransactionRequest){
 
         if(createTransactionRequest==null){
             return null;

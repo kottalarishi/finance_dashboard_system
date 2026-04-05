@@ -17,7 +17,7 @@ import java.time.LocalDate;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class createTransactionRequest {
+public class CreateTransactionRequest {
 
 
     @NotNull

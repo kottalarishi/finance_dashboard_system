@@ -7,6 +7,7 @@ import com.rishi.finance_dashboard_system.util.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -21,6 +22,7 @@ public class DashBoardController {
      @Autowired
     public final DashBoardInterfaceImplementation interfaceImplementation;
 
+     @PreAuthorize("hasAnyRole('ADMIN','ANALYST','VIEWER')")
      @GetMapping("/totalIncome/{userId}")
      public ResponseEntity<ApiResponse<BigDecimal>> getTotalIncome(@PathVariable Long userId){
             BigDecimal totalIncome= interfaceImplementation.getTotalIncome(userId);
@@ -28,7 +30,7 @@ public class DashBoardController {
 
              return  ResponseEntity.status(response.getStatusCode()).body(response);
      }
-
+    @PreAuthorize("hasAnyRole('ADMIN','ANALYST','VIEWER')")
     @GetMapping("/totalExpense/{userId}")
     public ResponseEntity<ApiResponse<BigDecimal>> getTotalExpense(@PathVariable Long userId){
         BigDecimal totalExpenses= interfaceImplementation.getTotalExpenses(userId);
@@ -36,7 +38,7 @@ public class DashBoardController {
 
         return  ResponseEntity.status(response.getStatusCode()).body(response);
     }
-
+    @PreAuthorize("hasAnyRole('ADMIN','ANALYST','VIEWER')")
     @GetMapping("/netBalance/{userId}")
     public ResponseEntity<ApiResponse<BigDecimal>> getTotalNetBalance(@PathVariable Long userId){
         BigDecimal netBalance= interfaceImplementation.getNetBalance(userId);
@@ -44,7 +46,7 @@ public class DashBoardController {
 
         return  ResponseEntity.status(response.getStatusCode()).body(response);
     }
-
+    @PreAuthorize("hasAnyRole('ADMIN','ANALYST')")
     @GetMapping("/getCategoryWiseTotal/{userId}")
     public ResponseEntity<ApiResponse<Map<String,BigDecimal>>> getCategoryWiseTotal(@PathVariable Long userId){
 
@@ -52,7 +54,7 @@ public class DashBoardController {
         ApiResponse<Map<String,BigDecimal>> response= new ApiResponse<>(200,"fetched CategoryWiseTotal  successfully",map);
         return ResponseEntity.status(response.getStatusCode()).body(response);
     }
-
+    @PreAuthorize("hasAnyRole('ADMIN','ANALYST')")
     @GetMapping("/getMonthlyTrends/{userId}")
     public ResponseEntity<ApiResponse<Map<String,BigDecimal>>> getMonthlyTrends(@PathVariable Long userId){
 
@@ -61,13 +63,14 @@ public class DashBoardController {
         return ResponseEntity.status(response.getStatusCode()).body(response);
     }
 
-
+    @PreAuthorize("hasAnyRole('ADMIN','ANALYST')")
     @GetMapping("/getRecentActivity/{userId}")
     public ResponseEntity<ApiResponse<List<TransactionResponse>>> getRecentActivity(@PathVariable Long userId){
          List<TransactionResponse> transactionResponses= interfaceImplementation.getRecentActivity(userId);
          ApiResponse<List<TransactionResponse>> response= new ApiResponse<>(200,"recent activity fetched successfully",transactionResponses);
          return  ResponseEntity.status(response.getStatusCode()).body(response);
     }
+    @PreAuthorize("hasAnyRole('ADMIN','ANALYST')")
     @GetMapping("/getMonthlyCategoryWiseTotal/{userId}")
     public  ResponseEntity<ApiResponse<Map<String, Map<String, BigDecimal>>>> getMonthlyCategoryWiseTotal(@PathVariable Long userId){
         Map<String, Map<String, BigDecimal>>  map= interfaceImplementation.getMonthlyCategoryWiseTotal(userId);

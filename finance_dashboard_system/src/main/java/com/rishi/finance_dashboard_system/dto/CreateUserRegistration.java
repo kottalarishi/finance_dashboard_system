@@ -3,7 +3,6 @@ package com.rishi.finance_dashboard_system.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
 @Getter
@@ -11,7 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class createUserRegistration {
+public class CreateUserRegistration {
 
     @NotBlank
     private String userName;

@@ -2,7 +2,7 @@ package com.rishi.finance_dashboard_system.serviceImplementation;
 
 import com.rishi.finance_dashboard_system.dto.UpdateUserRequest;
 import com.rishi.finance_dashboard_system.dto.UserResponse;
-import com.rishi.finance_dashboard_system.dto.createUserRegistration;
+import com.rishi.finance_dashboard_system.dto.CreateUserRegistration;
 import com.rishi.finance_dashboard_system.entity.Role;
 import com.rishi.finance_dashboard_system.entity.User;
 import com.rishi.finance_dashboard_system.exception.GlobalExceptionHandler;
@@ -11,7 +11,10 @@ import com.rishi.finance_dashboard_system.repositary.UserRepository;
 import com.rishi.finance_dashboard_system.serviceInterfaces.UserInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Locale;
 
 @Service
 @RequiredArgsConstructor
@@ -24,9 +27,11 @@ public class UserInterfaceImplementation implements UserInterface {
 
     @Autowired
     private final GlobalExceptionHandler exceptionHandler;
+    @Autowired
+    private final PasswordEncoder passwordEncoder;
 
     @Override
-    public UserResponse addUser(createUserRegistration userRegistration) {
+    public UserResponse addUser(CreateUserRegistration userRegistration) {
 
         if(userRegistration==null){
             throw new IllegalArgumentException("Invalid Input");
@@ -52,6 +57,7 @@ public class UserInterfaceImplementation implements UserInterface {
 
         user.setRole(Role.VIEWER);
         user.set_active(true);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
 
       User saveUser=  userRepository.save(user);
         return  userMapper.toDto(saveUser);
@@ -99,5 +105,26 @@ public class UserInterfaceImplementation implements UserInterface {
 
 
         return userMapper.toDto(updateUser);
+    }
+
+    @Override
+    public String updateUserRole(Long userId, String role) {
+
+        User user=userRepository.findById(userId).orElseThrow(()-> new
+                GlobalExceptionHandler.ResourceNotFoundException("id not found with "+ userId));
+
+          if(role==null){
+              throw new IllegalArgumentException("Invalid Input");
+          }
+
+          Role newRole= Role.valueOf(role.toUpperCase(Locale.ROOT));
+
+          user.setRole(newRole);
+
+
+        userRepository.save(user);
+
+
+        return "Role updated successfully" +" "+ role ;
     }
 }

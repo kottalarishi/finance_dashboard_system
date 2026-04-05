@@ -2,7 +2,7 @@ package com.rishi.finance_dashboard_system.controller;
 
 import com.rishi.finance_dashboard_system.dto.TransactionResponse;
 import com.rishi.finance_dashboard_system.dto.UpdateTransactionRequest;
-import com.rishi.finance_dashboard_system.dto.createTransactionRequest;
+import com.rishi.finance_dashboard_system.dto.CreateTransactionRequest;
 import com.rishi.finance_dashboard_system.entity.Type;
 import com.rishi.finance_dashboard_system.serviceImplementation.TransactionInterfaceImplementation;
 import com.rishi.finance_dashboard_system.util.ApiResponse;
@@ -10,6 +10,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -23,8 +24,9 @@ public class TransactionController {
     @Autowired
     public final TransactionInterfaceImplementation interfaceImplementation;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/addTransaction")
-    public ResponseEntity<ApiResponse<TransactionResponse>> addTransaction(@Valid @RequestBody createTransactionRequest transactionRequest){
+    public ResponseEntity<ApiResponse<TransactionResponse>> addTransaction(@Valid @RequestBody CreateTransactionRequest transactionRequest){
 
         TransactionResponse transactionResponse= interfaceImplementation.addTransaction(transactionRequest);
 
@@ -32,7 +34,7 @@ public class TransactionController {
 
         return ResponseEntity.status(response.getStatusCode()).body(response);
     }
-
+    @PreAuthorize("hasAnyRole('ADMIN','ANALYST')")
     @GetMapping("/fetchByID/{id}")
     public ResponseEntity<ApiResponse<TransactionResponse>> getTransactionById(@PathVariable Long id){
 
@@ -41,7 +43,7 @@ public class TransactionController {
         return ResponseEntity.status(response.getStatusCode()).body(response);
 
     }
-
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<ApiResponse<TransactionResponse>> deleteTransactionById(@PathVariable Long id){
         interfaceImplementation.deleteTransactionById(id);
@@ -50,6 +52,7 @@ public class TransactionController {
         return ResponseEntity.status(response.getStatusCode()).body(response);
 
     }
+    @PreAuthorize("hasAnyRole('ADMIN','ANALYST')")
     @GetMapping("/getTransactions/{userId}")
     public ResponseEntity<ApiResponse<List<TransactionResponse>>> getUserTransactionsById(@PathVariable  Long userId){
 
@@ -57,7 +60,7 @@ public class TransactionController {
         ApiResponse<List<TransactionResponse>> response= new ApiResponse<>(200,"Transactions fetched successfully",transactionResponses);
         return  ResponseEntity.status(response.getStatusCode()).body(response);
     }
-
+    @PreAuthorize("hasRole('ADMIN')")
     @PatchMapping("/partialupdate/{id}")
     public ResponseEntity<ApiResponse<TransactionResponse>> updateTransaction( @PathVariable Long id,     @RequestBody UpdateTransactionRequest transactionRequest){
 
@@ -65,6 +68,7 @@ public class TransactionController {
            ApiResponse<TransactionResponse> response= new ApiResponse<>(200,"Transaction updated Successfully",transactionResponse);
         return  ResponseEntity.status(response.getStatusCode()).body(response);
     }
+    @PreAuthorize("hasAnyRole('ADMIN','ANALYST')")
     @GetMapping("/filterTransactions")
     public  ResponseEntity<ApiResponse<List<TransactionResponse>>>
                        searchTransactions(@RequestParam Long userId,
@@ -81,11 +85,5 @@ public class TransactionController {
 
         return  ResponseEntity.status(response.getStatusCode()).body(response);
     }
-
-
-
-
-
-
 
 }

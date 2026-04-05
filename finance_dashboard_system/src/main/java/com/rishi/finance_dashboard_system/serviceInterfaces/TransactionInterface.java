@@ -2,15 +2,14 @@ package com.rishi.finance_dashboard_system.serviceInterfaces;
 
 import com.rishi.finance_dashboard_system.dto.TransactionResponse;
 import com.rishi.finance_dashboard_system.dto.UpdateTransactionRequest;
-import com.rishi.finance_dashboard_system.dto.createTransactionRequest;
-import com.rishi.finance_dashboard_system.entity.Transaction;
+import com.rishi.finance_dashboard_system.dto.CreateTransactionRequest;
 import com.rishi.finance_dashboard_system.entity.Type;
 
 import java.time.LocalDate;
 import java.util.List;
 
 public interface TransactionInterface {
-    TransactionResponse addTransaction(createTransactionRequest transactionRequest);
+    TransactionResponse addTransaction(CreateTransactionRequest transactionRequest);
 
     TransactionResponse getTransactionById(Long id);
 
