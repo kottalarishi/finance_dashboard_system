@@ -139,17 +139,42 @@ Here in the  finance_dashboard_system there are  multiple finacial records and d
   - password must be 8 characters if not -----> 400 bad request<br>
   - the password must be with uppercase lowercase one special character and number if not----> 400 Bad Request<br>
   - the Phone number should be unique if not ----> DataIntegrityViolationException  409 conflict<br>
-    
-    
 
+ ## Asumptions made
+ 1.  All the new users will get the default ROle VIEWER and the promoted by the ADMIN to ANALYST OR ADMIN ROle. <br>
+ 2.  First admin of the project is inserted into the dataBase by using the flyway because we are not allowing user to set their   role.<br>
+ 3. Also the user once he can only hold or have a single role at a single time no multiple roles.<br>
+ 4. For login emails is a unique identifier as a username not the email.<br>
+ 5. Phone number must be unique for user . <br> 
+ 6. Each transaction must belongs to one user. <br>
+ 7. Deleting a user will also delete the transactions even we have isActive. <br>
+ 8. Token expiry is set to one hour user must login after one hour again.<br>
+
+## TradeOffs 
+
+- MOST IMPORTANT "User or transaction id as parameter" ---> The user id is directly passed as a prameter in this project first. this leads to any user to enter someone's id it also voilates security so in production we must pass the userid or transaction id in controller by retrieve from the customerUserDetails as getPrincipal(), due to time constraint i continued with first approach.<br> <br>
+
+- "No time Zone" ---> Here the date fields are stored in whatever time zone but in the producation we must follow single time zone such as UTC.
+
+- "Refresh token is genreate but not implemented "---> I have Generated refresh token but later i commented it out not implemented it due to time contraint so in production we need to implement refresh token to avoid re - login again after access token expiry because re fresh token provieds a token.
+
+- "No rate liiting " --> no particular rate limiting  for login end point here we need add those in production such as 5 logins per min
+
+- "No unit test "  ---> no unit testing for service classes to test data in producation we need to ensure it before.
+
+- "Soft deleting not fully implemented "--> In user entity we have is_active for activation and deactivation of users .
+  but i performed hard delete here in this project which i choosen before, so to implemt soft delete we need to deactivate   user and filter from the get quries.
+  
+  - "CORS allows all orgins " --> in COrs we have allowedOrgins(*) for development convenience so we need to customize as per 
+     frontend.
+    
+  
+  
   
 
-     
+
+
+
+
+    
   
-  
-  
-   
-  
-   
-   
-   
