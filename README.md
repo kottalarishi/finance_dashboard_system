@@ -32,11 +32,10 @@ Here in the  finance_dashboard_system there are  multiple finacial records and d
 
    ## Steps to Run
     1 . Clone the repo
-        git clone https://github.com/kottalarishi/finance_dashboard_system
-    2 . create a postgresSql database name 'finance_dashboard_system'
-    3 . provied application.properties in gitIgnore as example, create file application.properties and fill with your values
-    4 . Before running check the flyway it will create tables V6_ version is change the role intialized with my fileds so 
-       please check into it 
+        git clone https://github.com/kottalarishi/finance_dashboard_system <br>
+    2 . create a postgresSql database name 'finance_dashboard_system' <br>
+    3 . provied application.properties in gitIgnore as example, create file application.properties and fill with your values <br>
+    4 . Before running check the flyway it will create tables V6_ version is change the role intialized with my fileds so  please check into it  <br>
 
    ## Project Structure
    ####  In this backend application i have used layred architecture, where controller handles the requests,   repository interacts with the database and the business logic is written in service.
@@ -65,13 +64,75 @@ Here in the  finance_dashboard_system there are  multiple finacial records and d
    - serviceImplementation: The business logic is written in the service implementation layer and here we validate most of the edge cases and constraints.<br> <br>
  
   ## System Desgin
-  The Finacne Dashboard system is desgined based on role based access .
-  Multiple users interact with multoiple records based on their sepcific role.
+  ```
+  The Finacne Dashboard system is desgined based on role based access .<br> <br>
+  Multiple users interact with multoiple records based on their sepcific role.<br> <br>
 
   ### user Flow
-   - User registration- On registration user will get VIEWER role on default (registration named as saveUser as Api)
-   - the One who need to be admin should change their Role to ADMIN By using the flyway after it he can change role to VIEWER TO ANALYST OR ADMIN ,ANALYST TO VIEWER OR ADMIN.
-   - 
+   - User registration- On registration user will get VIEWER role on default (registration named as saveUser as Api)<br> <br>
+   - the One who need to be admin should change their Role to ADMIN By using the flyway after it he can change role to VIEWER TO ANALYST OR ADMIN ,ANALYST TO VIEWER OR ADMIN.<br> <br>
+   - User logs in then receives JWt token which contians email and role<br> 
+   - user will send the token with request<br> 
+   - After the request the token is validated on every single request <br>
+   - @PreAuthorize annotation will check the role before request pass to controller  <br>
+   - At last Service process the request and returns data as response <br>
+
+   ## Transaction Flow
+     - ADMIN will create the transaction with amount type category notes and update ,delte the records
+     - ANALYST can view the records and fetch and filter transactions
+    -  VIEWER can only see the sum summaries like totalIncome,net Balance totalExpense only 
+     - Dashboard APis will return the aggregated data and recent summaries of transaction
+
+  ## Access Control FLow
+    JwtFilter-->SecurityConfiguration-->controller-->service-->Respository-->Response
+
+  ## Data Relation
+     One user has many transactions
+     deleting the user will also deltes the transactions of user (Cascade.ALl)
+     each transaction will belongs to one user
+
+  ```
+  
+  ## API Overview
+  The following edescribes about the APi of finance_dashboard system <br>
+  
+  ### AuthController related Apis <br>
+  - POST /api/v1/login -->  After login it returns jwt token , role and email <br> 
+
+    
+   ## UserController APIs  
+   - POST /api/v1/users/saveUser  : This api will save user in DB ----- public APi.     <br>                            
+   - GET /api/v1/users/{id} : This api will fetch the deatils of user based on  id  only ADMIN   can access. <br>
+   - DELETE /api/v1/users/delete/{id} : by using this APi the we can delete the user based on user id only ADMIN can Access <br>  
+   - PATCH /api/v1/users/updateRole/{id} : Most Spefic API where after registration user will get default VIEWER role, so the role is changed after if needed  ADMIN can access. <br> 
+   - PATCH /api/v1/users/partialupdate/{id} : This API allows to update the user data Partially Accessed only by ADMIN  <br> 
+
+   ## TransactionController APIs
+
+   - POST    /api/v1/transactions/addTransaction  : This APIS works to create the transaction with fields like amount type,category, notes by taking the userId <br>
+   - GET     /api/v1/transactions/fetchByID/{id}  : we can fetch the transactions based on the transaction id which returns the transactionsResponse as data Accessed by ADMIN and ANALYST  <br>
+   - DELETE  /api/v1/transactions/delete/{id}  :  we can delete users on the basis of userId and return message not the data accessed by the ADMIN  <br>
+   - GET     /api/v1/transactions/getTransactions/{id} : Here this APIs make some diffrence fetch we can get the all transactions of user based on userId <br>
+   - GET     /api/v1/transactions/filterTransactions  : Here we filter the transaction with specific date, category, type " not all the fields are required we can fetch individually or by group"  <br>
+   - PATCH   /api/v1/transactions/partialupdate/{id} : This   API will update the transactions partiallly and returns the TransactionResponse <br>
+
+    ## DashboardController APIs 
+
+    - GET    /api/v1/dashBoard/totalIncome/{userId}  <br>
+    - GET    /api/v1/dashBoard/totalExpense/{userId}  <br>
+    - GET    /api/v1/dashBoard/netBalance/{userId}    <br>
+    - GET    /api/v1/dashBoard/getCategoryWiseTotal/{userId} <br>
+    - GET    /api/v1/dashBoard/getMonthlyTrends/{userId}     <br>
+    - GET    /api/v1/dashBoard/getRecentActivity/{userId}    <br>
+    - GET    /api/v1/dashBoard/getMonthlyCategoryWiseTotal/{userId} <br>
+
+  
+
+    
+
+  
+
+     
   
   
   
