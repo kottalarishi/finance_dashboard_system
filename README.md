@@ -127,7 +127,19 @@ Here in the  finance_dashboard_system there are  multiple finacial records and d
     - GET    /api/v1/dashBoard/getMonthlyCategoryWiseTotal/{userId} :   This returns monthly category wise amount by gropuing month and category accessed by  "ADMIN " and "ANALYST " <br>
 
   
-
+  ## Edge Cases handled
+  - If some one login with wrong credntials ---> 401 Bad credentials <br>
+  - The token is valid but it has no role ----> 403 Forbidden  <br>
+  - If Request sent without token we get Unauthorized ----> 401 Unauthorized <br>
+  - If the user not found by id ---->  404 Resource not found by ID <br>
+  - Registering with existing email will give us 400 email already exists <br>
+  - Empty or null we get validation error <br>
+  - Deleting  a user along with the transactions<br>
+  - phone number must be 10 digits ---> 400 bad request <br>
+  - password must be 8 characters if not -----> 400 bad request<br>
+  - the password must be with uppercase lowercase one special character and number if not----> 400 Bad Request<br>
+  - the Phone number should be unique if not ----> DataIntegrityViolationException  409 conflict<br>
+    
     
 
   
