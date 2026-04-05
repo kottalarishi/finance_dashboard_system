@@ -109,8 +109,10 @@ Here in the  finance_dashboard_system there are  multiple finacial records and d
    - GET /api/v1/users/{id} : This api will fetch the deatils of user based on  id  only ADMIN   can access. <br>
    - DELETE /api/v1/users/delete/{id} : by using this APi the we can delete the user based on user id only ADMIN can Access <br>  
    - PATCH /api/v1/users/updateRole/{id} : Most Spefic API where after registration user will get default VIEWER role, so the role is changed after if needed  ADMIN can access. <br> 
-   - PATCH /api/v1/users/partialupdate/{id} : This API allows to update the user data Partially Accessed only by ADMIN  <br> 
-
+   - PATCH /api/v1/users/partialupdate/{id} : This API allows to update the user data Partially Accessed only by ADMIN  <br>
+   - PATCH /api/v1/users/activateUser/{userId}   : This actiavte user <br>
+   - PATCH /api/v1/users/deActivateUser/{userId} : This deActivate the user set is_active to false <br>
+   
    ## TransactionController APIs
 
    - POST    /api/v1/transactions/addTransaction  : This APIS works to create the transaction with fields like amount type,category, notes by taking the userId <br>
@@ -135,6 +137,7 @@ Here in the  finance_dashboard_system there are  multiple finacial records and d
   - If some one login with wrong credntials ---> 401 Bad credentials <br>
   - The token is valid but it has no role ----> 403 Forbidden  <br>
   - If Request sent without token we get Unauthorized ----> 401 Unauthorized <br>
+  - If Some one logged in with deactivated account ---> 403 Forbiden
   - If the user not found by id ---->  404 Resource not found by ID <br>
   - Registering with existing email will give us 400 email already exists <br>
   - Empty or null we get validation error <br>
@@ -166,6 +169,9 @@ Here in the  finance_dashboard_system there are  multiple finacial records and d
 
 - "No unit test "  ---> no unit testing for service classes to test data in producation we need to ensure it before.
 
+- "Transaction and User update uses patch" ---> In this project i updated user and transaaction with PATCH to update fully we need to use PUT
+- "NetBlance " ---> In this project net balance is showend in neagative also to prevent it we need to write the edge case the allow expesnse of if Income is more than zero and expense.
+
 - "Soft deleting not fully implemented "--> In user entity we have is_active for activation and deactivation of users .
   but i performed hard delete here in this project which i choosen before, so to implemt soft delete we need to deactivate   user and filter from the get quries.
   
@@ -184,7 +190,11 @@ Here in the  finance_dashboard_system there are  multiple finacial records and d
 - user and authorites wrapped in CustomeruserDetailsServie
   
   
-  
+  ## Testing
+  **Note:** ALL APIs tested using the postman with Three roles and all the responses are pushe to postman folder 
+  - has two folder
+    1. without jwt
+    2. with Jwt 
 
 
 
