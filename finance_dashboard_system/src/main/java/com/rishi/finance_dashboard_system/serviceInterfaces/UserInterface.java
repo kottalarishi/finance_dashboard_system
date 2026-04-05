@@ -16,4 +16,8 @@ public interface UserInterface {
     UserResponse updateUser(Long id, UpdateUserRequest updateUserRequest);
 
     String updateUserRole(Long userId, String role);
+
+    void activateUser(Long userId);
+
+    void deactivateUser(Long userId);
 }

@@ -67,6 +67,27 @@ public class UserController {
                      return       ResponseEntity.status(response.getStatusCode()).body(response);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
+    @PatchMapping("/activateUser/{userId}")
+    public ResponseEntity<ApiResponse<UserResponse>> activateUser(@PathVariable Long userId){
+
+       userInterfaceImplementation.activateUser(userId);
+        ApiResponse<UserResponse> response= new ApiResponse<>(200,"user Activated updated  successfully",null);
+        return  ResponseEntity.status(response.getStatusCode()).body(response);
+
+
+    }
+    @PreAuthorize("hasRole('ADMIN')")
+    @PatchMapping("/deActivateUser/{userId}")
+    public ResponseEntity<ApiResponse<UserResponse>> deActivateUser(@PathVariable Long userId){
+
+       userInterfaceImplementation.deactivateUser(userId);
+        ApiResponse<UserResponse> response= new ApiResponse<>(200,"user de activated  updated  successfully",null);
+        return  ResponseEntity.status(response.getStatusCode()).body(response);
+
+
+    }
+
 
 
 }

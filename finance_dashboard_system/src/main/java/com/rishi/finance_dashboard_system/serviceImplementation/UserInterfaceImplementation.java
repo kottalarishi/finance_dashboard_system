@@ -127,4 +127,21 @@ public class UserInterfaceImplementation implements UserInterface {
 
         return "Role updated successfully" +" "+ role ;
     }
+
+    @Override
+    public void activateUser(Long userId) {
+        User user=userRepository.findById(userId).orElseThrow(()-> new
+                GlobalExceptionHandler.ResourceNotFoundException("id not found with "+ userId));
+        user.set_active(true);
+        userRepository.save(user);
+    }
+
+    @Override
+    public void deactivateUser(Long userId) {
+        User user=userRepository.findById(userId).orElseThrow(()-> new
+                GlobalExceptionHandler.ResourceNotFoundException("id not found with "+ userId));
+
+        user.set_active(false);
+        userRepository.save(user);
+    }
 }

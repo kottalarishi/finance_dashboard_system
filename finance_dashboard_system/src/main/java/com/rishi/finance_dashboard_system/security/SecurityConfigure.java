@@ -15,6 +15,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -41,7 +46,19 @@ public class SecurityConfigure {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
 
-        httpSecurity.csrf(crsf->crsf.disable()).
+        httpSecurity.csrf(crsf->crsf.disable()).cors(cors->{}).
+                exceptionHandling(exception->exception.authenticationEntryPoint(
+                        ((request, response, authException) -> {
+                            response.setStatus(401);
+                            response.setContentType("application/json");
+                            response.getWriter().write("{\"statusCode\":401,\"message\":Unauthorized,\"data\":null}");
+                        })
+                        ).accessDeniedHandler(((request, response, accessDeniedException) -> {
+                    response.setStatus(403);
+                    response.setContentType("application/json");
+                    response.getWriter().write("{\"statusCode\":403,\"message\":Forbidden- insufficient role,\"data\":null}");
+                        }))
+                ).
                 sessionManagement(s->s.sessionCreationPolicy(SessionCreationPolicy.STATELESS)).
                 authorizeHttpRequests(auth->auth
 
@@ -50,6 +67,8 @@ public class SecurityConfigure {
                         .requestMatchers("/api/v1/users/**").hasRole("ADMIN")
                         .requestMatchers("/api/v1/users/delete/**").hasRole("ADMIN")
                         .requestMatchers("/api/v1/users/partialupdate/**").hasRole("ADMIN")
+                        .requestMatchers("/api/v1/users/activateUser/**").hasRole("ADMIN")
+                        .requestMatchers("/api/v1/users/deActivateUser/**").hasRole("ADMIN")
 
                         //transaaction apis
                         .requestMatchers("/api/v1/transactions/addTransaction").hasRole("ADMIN")
@@ -74,6 +93,20 @@ public class SecurityConfigure {
 
         return httpSecurity.build();
     }
+
+     @Bean
+    public CorsConfigurationSource corsConfigurationSource(){
+         CorsConfiguration corsConfiguration= new CorsConfiguration();
+         corsConfiguration.setAllowedOrigins(List.of("*"));
+         corsConfiguration.setAllowedMethods(List.of("GET","POST","PATCH","PUT","DELETE","OPTIONS"));
+         corsConfiguration.setAllowedHeaders(List.of("*"));
+
+         UrlBasedCorsConfigurationSource corsConfigurationSource= new UrlBasedCorsConfigurationSource();
+         corsConfigurationSource.registerCorsConfiguration("/**",corsConfiguration);
+         return  corsConfigurationSource;
+
+     }
+
 
 
 }
